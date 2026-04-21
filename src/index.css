@@ -1,0 +1,10 @@
+/* src/index.css */
+@import "tailwindcss";
+
+/* 게임 화면이 스크롤되지 않도록 바디 세팅 */
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #87CEEB;
+  /* 포트리스의 상징적인 하늘색 배경 */
+}
