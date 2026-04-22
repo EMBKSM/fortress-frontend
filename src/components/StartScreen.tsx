@@ -19,7 +19,7 @@ interface RoomInfo {
 
 export function StartScreen({ onStart }: StartScreenProps) {
   const [selectedMap, setSelectedMap] = useState<number>(1);
-  const [selectedSize, setSelectedSize] = useState<number>(30000);
+  const [selectedSize, setSelectedSize] = useState<number>(10000);
   const [showGuide, setShowGuide] = useState(false);
 
   const [roomTitle, setRoomTitle] = useState('');
@@ -175,8 +175,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
               onClick={handleStartGame}
               disabled={roomPlayers.length < 2}
               className={`px-12 py-4 font-black text-2xl rounded-2xl transition-all ${roomPlayers.length >= 2
-                  ? 'bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 text-white shadow-[0_10px_0_rgb(127,29,29)] active:scale-95'
-                  : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                ? 'bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 text-white shadow-[0_10px_0_rgb(127,29,29)] active:scale-95'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
             >
               {roomPlayers.length >= 2 ? '게임 시작' : '혼자서는 시작할 수 없습니다'}
@@ -214,8 +214,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
                   if (map.id === 1) setSelectedSize(10000); // 시가지는 소형으로 고정
                 }}
                 className={`cursor-pointer p-4 rounded-xl border-2 transition-all duration-200 ${selectedMap === map.id
-                    ? 'bg-white/10 border-orange-500 scale-[1.02] shadow-[0_0_15px_rgba(249,115,22,0.4)]'
-                    : 'bg-black/30 border-transparent hover:bg-white/5 hover:border-gray-500'
+                  ? 'bg-white/10 border-orange-500 scale-[1.02] shadow-[0_0_15px_rgba(249,115,22,0.4)]'
+                  : 'bg-black/30 border-transparent hover:bg-white/5 hover:border-gray-500'
                   }`}
               >
                 <h3 className={`text-lg font-black mb-1 ${selectedMap === map.id ? 'text-orange-400' : 'text-gray-300'}`}>
@@ -233,8 +233,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
                 onClick={() => setSelectedSize(size.value)}
                 disabled={selectedMap === 1}
                 className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${selectedSize === size.value
-                    ? 'bg-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]'
-                    : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                  ? 'bg-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]'
+                  : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
                   } ${selectedMap === 1 && 'opacity-50 cursor-not-allowed'}`}
               >
                 {size.label}
@@ -302,8 +302,8 @@ export function StartScreen({ onStart }: StartScreenProps) {
                       onClick={() => handleJoinRoom(room.id, room.mapType, room.mapSize, room.hasPassword)}
                       disabled={room.playerCount >= room.maxPlayers || room.status !== 'waiting'}
                       className={`px-6 py-2 rounded-lg font-black text-white transition-all ${room.playerCount >= room.maxPlayers || room.status !== 'waiting'
-                          ? 'bg-gray-600 cursor-not-allowed'
-                          : 'bg-green-600 hover:bg-green-500 active:scale-95 shadow-[0_4px_0_rgb(21,128,61)]'
+                        ? 'bg-gray-600 cursor-not-allowed'
+                        : 'bg-green-600 hover:bg-green-500 active:scale-95 shadow-[0_4px_0_rgb(21,128,61)]'
                         }`}
                     >
                       {room.status === 'playing' ? '게임 중' : (room.playerCount >= room.maxPlayers ? '인원 초과' : '참여하기')}
