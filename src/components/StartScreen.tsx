@@ -84,12 +84,12 @@ export function StartScreen({ onStart }: StartScreenProps) {
   const handleCreateRoom = () => {
     soundManager.init();
     soundManager.playClick();
-    socket.emit('createRoom', { 
-      title: roomTitle, 
-      password: roomPassword, 
+    socket.emit('createRoom', {
+      title: roomTitle,
+      password: roomPassword,
       maxPlayers: maxPlayersInput,
-      mapType: selectedMap, 
-      mapSize: selectedSize 
+      mapType: selectedMap,
+      mapSize: selectedSize
     });
   };
 
@@ -144,7 +144,7 @@ export function StartScreen({ onStart }: StartScreenProps) {
             <h2 className="text-2xl font-bold">참여자 목록</h2>
             <span className="text-xl font-mono text-sky-200">{roomPlayers.length} / {maxPlayers} 명</span>
           </div>
-          
+
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-h-[40vh] overflow-y-auto">
             {roomPlayers.map((p) => (
               <div key={p.id} className={`p-4 rounded-xl font-bold text-center ${p.index === myPlayerIndex ? 'bg-orange-500 text-white border-2 border-white' : 'bg-sky-700 text-sky-100'}`}>
@@ -164,21 +164,20 @@ export function StartScreen({ onStart }: StartScreenProps) {
 
         <div className="flex gap-4">
           <button
-             onClick={handleLeaveRoom}
-             className="px-8 py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xl rounded-2xl transition-all"
+            onClick={handleLeaveRoom}
+            className="px-8 py-4 bg-gray-600 hover:bg-gray-500 text-white font-bold text-xl rounded-2xl transition-all"
           >
-             방 나가기
+            방 나가기
           </button>
 
           {myPlayerIndex === 0 ? (
             <button
               onClick={handleStartGame}
               disabled={roomPlayers.length < 2}
-              className={`px-12 py-4 font-black text-2xl rounded-2xl transition-all ${
-                roomPlayers.length >= 2 
-                  ? 'bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 text-white shadow-[0_10px_0_rgb(127,29,29)] active:scale-95' 
+              className={`px-12 py-4 font-black text-2xl rounded-2xl transition-all ${roomPlayers.length >= 2
+                  ? 'bg-gradient-to-b from-red-500 to-red-700 hover:from-red-400 hover:to-red-600 text-white shadow-[0_10px_0_rgb(127,29,29)] active:scale-95'
                   : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-              }`}
+                }`}
             >
               {roomPlayers.length >= 2 ? '게임 시작' : '혼자서는 시작할 수 없습니다'}
             </button>
@@ -214,11 +213,10 @@ export function StartScreen({ onStart }: StartScreenProps) {
                   setSelectedMap(map.id);
                   if (map.id === 1) setSelectedSize(10000); // 시가지는 소형으로 고정
                 }}
-                className={`cursor-pointer p-4 rounded-xl border-2 transition-all duration-200 ${
-                  selectedMap === map.id 
-                    ? 'bg-white/10 border-orange-500 scale-[1.02] shadow-[0_0_15px_rgba(249,115,22,0.4)]' 
+                className={`cursor-pointer p-4 rounded-xl border-2 transition-all duration-200 ${selectedMap === map.id
+                    ? 'bg-white/10 border-orange-500 scale-[1.02] shadow-[0_0_15px_rgba(249,115,22,0.4)]'
                     : 'bg-black/30 border-transparent hover:bg-white/5 hover:border-gray-500'
-                }`}
+                  }`}
               >
                 <h3 className={`text-lg font-black mb-1 ${selectedMap === map.id ? 'text-orange-400' : 'text-gray-300'}`}>
                   MAP {map.id}. {map.name}
@@ -234,11 +232,10 @@ export function StartScreen({ onStart }: StartScreenProps) {
                 key={size.value}
                 onClick={() => setSelectedSize(size.value)}
                 disabled={selectedMap === 1}
-                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${
-                  selectedSize === size.value
+                className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${selectedSize === size.value
                     ? 'bg-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]'
                     : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-                } ${selectedMap === 1 && 'opacity-50 cursor-not-allowed'}`}
+                  } ${selectedMap === 1 && 'opacity-50 cursor-not-allowed'}`}
               >
                 {size.label}
               </button>
@@ -246,19 +243,19 @@ export function StartScreen({ onStart }: StartScreenProps) {
           </div>
 
           <div className="flex flex-col gap-3 mb-4">
-            <input 
-              placeholder="방 제목 입력 (없으면 자동 생성)" 
+            <input
+              placeholder="방 제목 입력 (없으면 자동 생성)"
               className="bg-black/30 border border-sky-600 p-2 rounded-lg text-white"
               value={roomTitle} onChange={e => setRoomTitle(e.target.value)}
             />
-            <input 
-              type="password" placeholder="비밀번호 (선택)" 
+            <input
+              type="password" placeholder="비밀번호 (선택)"
               className="bg-black/30 border border-sky-600 p-2 rounded-lg text-white"
               value={roomPassword} onChange={e => setRoomPassword(e.target.value)}
             />
             <div className="flex items-center justify-between">
               <span className="font-bold">최대 인원:</span>
-              <select 
+              <select
                 className="bg-sky-700 p-2 rounded-lg font-bold text-white outline-none border border-sky-600 focus:border-orange-500"
                 value={maxPlayersInput} onChange={e => setMaxPlayersInput(parseInt(e.target.value))}
                 disabled={selectedMap === 1}
@@ -304,11 +301,10 @@ export function StartScreen({ onStart }: StartScreenProps) {
                     <button
                       onClick={() => handleJoinRoom(room.id, room.mapType, room.mapSize, room.hasPassword)}
                       disabled={room.playerCount >= room.maxPlayers || room.status !== 'waiting'}
-                      className={`px-6 py-2 rounded-lg font-black text-white transition-all ${
-                        room.playerCount >= room.maxPlayers || room.status !== 'waiting'
+                      className={`px-6 py-2 rounded-lg font-black text-white transition-all ${room.playerCount >= room.maxPlayers || room.status !== 'waiting'
                           ? 'bg-gray-600 cursor-not-allowed'
                           : 'bg-green-600 hover:bg-green-500 active:scale-95 shadow-[0_4px_0_rgb(21,128,61)]'
-                      }`}
+                        }`}
                     >
                       {room.status === 'playing' ? '게임 중' : (room.playerCount >= room.maxPlayers ? '인원 초과' : '참여하기')}
                     </button>
@@ -330,31 +326,40 @@ export function StartScreen({ onStart }: StartScreenProps) {
       </div>
 
       {showGuide && (
-         <div className="absolute inset-0 z-50 bg-black/80 flex items-center justify-center p-8 backdrop-blur-sm animate-fade-in">
-           <div className="bg-sky-50 text-gray-800 w-full max-w-4xl max-h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border-4 border-sky-300">
-             <div className="bg-sky-200 p-6 flex justify-between items-center border-b-2 border-sky-300">
-               <h2 className="text-3xl font-black text-sky-900">🎮 포트리스 WEB 플레이 가이드</h2>
-               <button onClick={() => setShowGuide(false)} className="text-3xl font-bold text-sky-700 hover:text-red-500 transition-colors">✕</button>
-             </div>
-             <div className="p-8 overflow-y-auto flex flex-col gap-8 text-lg">
-               {/* 조작법 */}
-               <section>
-                 <h3 className="text-xl font-black text-red-600 mb-3 border-b-2 border-red-200 pb-2">🕹️ 기본 조작법</h3>
-                 <ul className="list-disc list-inside space-y-2 font-semibold text-gray-700">
-                   <li><span className="text-blue-600">이동:</span> 방향키 <kbd className="bg-gray-200 px-2 rounded">←</kbd> <kbd className="bg-gray-200 px-2 rounded">→</kbd> (이동 시 Fuel 소모)</li>
-                   <li><span className="text-blue-600">포신 조준:</span> 방향키 <kbd className="bg-gray-200 px-2 rounded">↑</kbd> <kbd className="bg-gray-200 px-2 rounded">↓</kbd></li>
-                   <li><span className="text-blue-600">궤적 예측 (조준경):</span> 스페이스바 1회 누르기</li>
-                   <li><span className="text-red-600">포탄 발사:</span> 궤적 예측 상태에서 스페이스바 1회 더 누르기</li>
-                 </ul>
-               </section>
-               {/* 기존 가이드 내용 생략 복원용 (축소) - 실제로는 이대로 둡니다 */}
-               <section>
-                <p className="text-gray-600 text-sm">상세 가이드는 게임 내 무기 도감을 참고하세요!</p>
-               </section>
-             </div>
-           </div>
-         </div>
-       )}
+        <div className="absolute inset-0 z-50 bg-black/80 flex items-center justify-center p-8 backdrop-blur-sm animate-fade-in">
+          <div className="bg-sky-50 text-gray-800 w-full max-w-4xl max-h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border-4 border-sky-300">
+            <div className="bg-sky-200 p-6 flex justify-between items-center border-b-2 border-sky-300">
+              <h2 className="text-3xl font-black text-sky-900">🎮 포트리스 WEB 플레이 가이드</h2>
+              <button onClick={() => setShowGuide(false)} className="text-3xl font-bold text-sky-700 hover:text-red-500 transition-colors">✕</button>
+            </div>
+            <div className="p-8 overflow-y-auto flex flex-col gap-8 text-lg">
+              {/* 조작법 */}
+              <section>
+                <h3 className="text-xl font-black text-red-600 mb-3 border-b-2 border-red-200 pb-2">🕹️ 기본 조작법</h3>
+                <ul className="list-disc list-inside space-y-2 font-semibold text-gray-700">
+                  <li><span className="text-blue-600">이동:</span> 방향키 <kbd className="bg-gray-200 px-2 rounded">←</kbd> <kbd className="bg-gray-200 px-2 rounded">→</kbd> (이동 시 Fuel 소모)</li>
+                  <li><span className="text-blue-600">포신 조준:</span> 방향키 <kbd className="bg-gray-200 px-2 rounded">↑</kbd> <kbd className="bg-gray-200 px-2 rounded">↓</kbd></li>
+                  <li><span className="text-blue-600">궤적 예측 (조준경):</span> 스페이스바 1회 누르기</li>
+                  <li><span className="text-red-600">포탄 발사:</span> 궤적 예측 상태에서 스페이스바 1회 더 누르기</li>
+                </ul>
+              </section>
+              {/* 기존 가이드 내용 생략 복원용 (축소) - 실제로는 이대로 둡니다 */}
+              <section>
+                <h3 className="text-xl font-black text-orange-500 mb-3 border-b-2 border-orange-200 pb-2">💣 무기 도감</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-semibold text-gray-700">
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-red-600 font-bold">🔴 철갑탄:</span> 지형 파괴에 특화된 묵직한 기본 포탄.</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-orange-500 font-bold">🔥 소이탄:</span> 공중에서 분열하여 넓은 범위에 피해를 줌.</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-teal-600 font-bold">☠️ 백린탄:</span> 피격 부위에 화염을 생성해 지속 피해를 줌.</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-pink-500 font-bold">🏀 바운스탄:</span> 땅에 닿으면 통통 튕기며 날아가는 특수탄.</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-purple-600 font-bold">🌀 텔레포트:</span> 포탄이 떨어진 위치로 내 탱크가 순간이동!</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><span className="text-indigo-600 font-bold">🎯 유도탄:</span> 하강 시 가장 가까운 적을 향해 궤도를 틉니다.</div>
+                  <div className="bg-white p-3 rounded-xl border border-gray-200 shadow-sm md:col-span-2"><span className="text-yellow-500 font-bold text-base">⚡ 에어버스트:</span> 날아가는 도중 <kbd className="bg-gray-200 px-1 rounded text-black">Space</kbd>를 다시 누르면 그 자리에서 즉시 거대 폭발!</div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
