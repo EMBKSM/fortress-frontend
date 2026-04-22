@@ -202,11 +202,11 @@ export function StartScreen({ onStart }: StartScreenProps) {
         <p className="text-xl text-sky-200 font-bold tracking-widest">멀티플레이어 대난투에 오신 것을 환영합니다</p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 w-full max-w-6xl px-8 h-[50vh]">
+      <div className="flex flex-col md:flex-row gap-8 w-full max-w-6xl px-8 h-[75vh] min-h-[650px]">
         {/* 🗺️ 새로운 맵 개척 (방 만들기) */}
         <div className="flex-1 bg-sky-800/50 p-6 rounded-3xl border-2 border-sky-600 flex flex-col">
           <h2 className="text-2xl font-bold mb-4 text-orange-400 border-b border-sky-600 pb-2">새 게임 맵 선택</h2>
-          <div className="grid grid-cols-1 gap-3 overflow-y-auto pr-2 mb-4">
+          <div className="grid grid-cols-1 gap-3 overflow-y-auto pr-2 mb-4 flex-1 min-h-[200px]">
             {maps.map((map) => (
               <div
                 key={map.id}
